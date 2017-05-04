@@ -1,9 +1,18 @@
 
-module.exports = BasicCard;
-
-function BasicCard (front, back) {
-  this.front = front;
-  this.back = back;
+function BasicCard (package) {
+	this.package = package;
+	this.front = this.package.split(",")[0];
+	this.back = this.package.split(",")[1];
+	this.print = function() {
+		console.log(this.front);
+		console.log(this.back);
+	};
 }
 
-var firstPresident = new BasicCard("Who was the first President of the United States?", "George Washington");
+var test = new BasicCard("South Dakota,What is the state were Mount Rushmore is located?");
+
+//console.log(test.front);
+//console.log(test.back);
+//test.print();
+
+module.exports = BasicCard;

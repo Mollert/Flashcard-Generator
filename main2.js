@@ -19,37 +19,29 @@ inquirer.prompt(choice).then(function(user) {
 	fs.readFile("questions.txt", "utf8", function(error, data) {
 		var questions = data.split("\n");
 		if (user.command === "Basic Flashcard") {
+
+//			for ( i=0 ; i < questions.length ; i++ ) {
 			function basicFlashcard() {
 				selectQuestion = questions[count];
 				var quest = new BasicCard(selectQuestion);
-				console.log(quest.back);
 				console.log(quest.front);
-//				function holdUp1() {
-//					console.log(quest.front);
-//				};
-//				setTimeout (holdUp1, 500);
-//				inquirer.prompt([
-//					{
-//						type: "input",
-//						name: " ",						
-//						message: quest.front
-//					},
-//					]).then(function (answer) {
-//						if (user.name === " ") {
-//							console.log("How about it?");
-//						}
-//					});
+//				console.log(quest.back);
+				inquirer.prompt([
+					{
+						type: "input",
+						name: "answer",						
+						message: quest.front
+					},
+				]).then(function (data) {
+					console.log("");
+					console.log(quest.back);
+					count++;
+					while (count < 10) {
+						basicFlashcard();
+					};
+				});
 			};
-			while (count < 10) {
-				console.log(count);
-//				function holdUp2() {
-//					console.log(quest.front);
-//					basicFlashcard();
-//				};
-//				setTimeout (holdUp2, 500);
-				basicFlashcard();
-				count++;					
-			};
+			basicFlashcard();			
 		}	
 		else {
 			function clozeFlashcard() {
