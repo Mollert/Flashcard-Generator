@@ -29,7 +29,7 @@ inquirer.prompt(choice).then(function(user) {
 });
 // Employed the Constuctors, called the Q & A, used timers to give space between q & A
 function basicFlashcardMain() {
-	if (count < 4) {
+	if (count < 10) {
 		eachSet = new BasicCard(allQuestAnswer[count]);
 		console.log("");
 		basicFront();
@@ -50,7 +50,7 @@ function basicBack() {
 
 
 function clozeFlashcardMain() {
-	if (count < 4) {
+	if (count < 10) {
 		eachSet = new ClozeCard(allQuestAnswer[count]);
 		console.log("");
 		clozePartial();
