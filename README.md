@@ -1,1 +1,1 @@
-Does work but . . . .
+As it runs it gives the user time to see both the question and answer.

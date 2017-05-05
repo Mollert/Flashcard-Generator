@@ -9,10 +9,4 @@ function BasicCard (package) {
 	};
 }
 
-var test = new BasicCard("South Dakota,What is the state were Mount Rushmore is located?");
-
-//console.log(test.front);
-//console.log(test.back);
-//test.print();
-
 module.exports = BasicCard;

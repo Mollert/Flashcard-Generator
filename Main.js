@@ -1,10 +1,9 @@
 
 var inquirer = require("inquirer");
 var fs = require("node-fs");
-var lineReader = require("line-reader");
 var BasicCard = require("./basiccard.js");
 var ClozeCard = require("./clozecard.js");
-
+// Chose which Flashcard game you want to play
 var choice = [
 	{
     type: "list",
@@ -14,69 +13,63 @@ var choice = [
 	}
 ];
 var count = 0;
-
+var allQuestAnswer = [];
+var eachSet = "";
+// Grab the user selection, read the Q & A file, loading into an array, and call the correct game
 inquirer.prompt(choice).then(function(user) {
 	fs.readFile("questions.txt", "utf8", function(error, data) {
-		var questions = data.split("\n");
+		allQuestAnswer = data.split("\n");
 		if (user.command === "Basic Flashcard") {
-			function basicFlashcard() {
-				selectQuestion = questions[count];
-				var quest = new BasicCard(selectQuestion);
-				console.log(quest.back);
-				console.log(quest.front);
-//				function holdUp1() {
-//					console.log(quest.front);
-//				};
-//				setTimeout (holdUp1, 500);
-//				inquirer.prompt([
-//					{
-//						type: "input",
-//						name: " ",						
-//						message: quest.front
-//					},
-//					]).then(function (answer) {
-//						if (user.name === " ") {
-//							console.log("How about it?");
-//						}
-//					});
-			};
-			while (count < 10) {
-				console.log(count);
-//				function holdUp2() {
-//					console.log(quest.front);
-//					basicFlashcard();
-//				};
-//				setTimeout (holdUp2, 500);
-				basicFlashcard();
-				count++;					
-			};
-		}	
+			basicFlashcardMain();
+		}
 		else {
-			function clozeFlashcard() {
-				selectQuestion = questions[count];
-				var quest = new ClozeCard(selectQuestion);
-				console.log(quest.partialText);
-				console.log(quest.clozeDeletion);
-				console.log(quest.fullText);				
-			};
-			while (count < 10) {
-				console.log(count);
-//				function holdUp2() {
-//					console.log(quest.front);
-//				};
-//				setTimeout (holdUp2, 3000);
-				clozeFlashcard();
-				count++;
-			};
+			clozeFlashcardMain();
 		}
 	});
-
 });
+// Employed the Constuctors, called the Q & A, used timers to give space between q & A
+function basicFlashcardMain() {
+	if (count < 4) {
+		eachSet = new BasicCard(allQuestAnswer[count]);
+		console.log("");
+		basicFront();
+		setTimeout (function(){basicBack();}, 1800);
+		count++;
+	}
+};
+
+function basicFront() {
+	console.log(eachSet.front);
+};
+
+function basicBack() {
+	console.log("");
+	console.log(eachSet.back);
+	setTimeout (function(){basicFlashcardMain();}, 2800);
+};
 
 
+function clozeFlashcardMain() {
+	if (count < 4) {
+		eachSet = new ClozeCard(allQuestAnswer[count]);
+		console.log("");
+		clozePartial();
+		setTimeout (function(){clozeDeletion();}, 3000);
+		setTimeout (function(){clozeFull();}, 3800);
+		count++;
+	}
+};
 
+function clozePartial() {
+	console.log(eachSet.partialText);
+};
 
+function clozeDeletion() {
+	console.log(eachSet.deletionText);
+};
 
-
-
-
+function clozeFull() {
+	console.log("");
+	console.log(eachSet.fullText);
+	setTimeout (function(){clozeFlashcardMain();}, 2600);
+};
